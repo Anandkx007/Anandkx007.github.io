@@ -1,36 +1,99 @@
-let menu = document.querySelector('#menu-bars');
-let header = document.querySelector('header');
+    
+// --------------FILL SKILL BARS----------------------------------
 
-menu.onclick = () =>{
-    menu.classList.toggle('fa-times');
-    header.classList.toggle('active');
+// var progressBars = document.querySelectorAll('.skills-progress > div');
+// // console.log(progressBars);
+// var skillsContainer = document.getElementById('skills-container');
+// var animationDone=false;
+
+// window.addEventListener('scroll', checkScroll);
+
+// function initialiseBars(){
+//   for(let bar of progressBars){
+//     bar.style.width = 0 + '%';
+//   }
+// }
+// initialiseBars();
+
+// function fillBars(){
+//   for(let bar of progressBars){
+//     let targetWidth=bar.getAttribute('data-bar-width');
+//     let currentWidth=0;
+//     let interval = setInterval(function(){
+//             if(currentWidth>targetWidth)
+//             clearInterval;
+//             else{
+//               currentWidth++;
+//               bar.style.width = currentWidth + '%';
+//             }
+//     },10)
+//   }
+// }
+
+// function checkScroll(){
+// //check wheather skills-container is visble or not 
+// var coordinates = skillsContainer.getBoundingClientRect();
+// if(!animationDone && coordinates.top < window.innerHeight){
+   
+//   animationDone=true;
+//   // console.log('skills section visible');
+//      fillBars();
+// } else if( coordinates.top > window.innerHeight){
+//   animationDone=false;
+//   initialiseBars();
+// }
+// }
+
+var progressBars = document.querySelectorAll(".skills-progress > div");
+
+
+function initialiseBar(bar) {
+    bar.setAttribute("data-visited", false);
+    bar.style.width = 0 + '%';
 }
 
-window.onscroll = () =>{
-    menu.classList.remove('fa-times');
-    header.classList.remove('active');
+for (var bar of progressBars) {
+    initialiseBar(bar);
 }
 
-let cursor1 = document.querySelector('.cursor-1');
-let cursor2 = document.querySelector('.cursor-2');
 
-window.onmousemove = (e) =>{
-    cursor1.style.top = e.pageY + 'px';
-    cursor1.style.left = e.pageX + 'px';
-    cursor2.style.top = e.pageY + 'px';
-    cursor2.style.left = e.pageX + 'px';
+
+function fillBar(bar) {
+
+    var currentWidth = 0;
+    var targetWidth = bar.getAttribute("data-bar-width");
+    var interval = setInterval(function () {
+        if (currentWidth >= targetWidth) {
+            clearInterval(interval);
+            return;
+        }
+        currentWidth++;
+        bar.style.width = currentWidth + '%';
+    }, 10);
+
 }
 
-document.querySelectorAll('a').forEach(links =>{
 
-    links.onmouseenter = () =>{
-        cursor1.classList.add('active');
-        cursor2.classList.add('active');
+
+// This function uses a for loop for individual progress bars.
+function checkScroll() {
+
+    for (let bar of progressBars) {
+        var barCoordinates = bar.getBoundingClientRect();
+        if ((bar.getAttribute("data-visited") == "false") &&
+            (barCoordinates.top < (window.innerHeight - barCoordinates.height))) {
+            bar.setAttribute("data-visited", true);
+            fillBar(bar);
+        } else if (barCoordinates.top > window.innerHeight) {
+            bar.setAttribute("data-visited", false);
+            initialiseBar(bar);
+        }
+
     }
+}
 
-    links.onmouseleave = () =>{
-        cursor1.classList.remove('active');
-        cursor2.classList.remove('active');
-    }
+window.addEventListener("scroll", checkScroll);
 
-});
+// This event fills the progress bars if they are displayed on the screen when the page is loaded.
+//window.addEventListener("load", checkScroll);
+ 
