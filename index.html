@@ -17,6 +17,38 @@
   <meta property="og:title" content="Portfolio Website" />
   <meta property="og:description"  content="Full-Stack Web Developer and Competitive Programmer" />
   <!-- <meta name="viewport"> -->
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    #visitCount {
+        font-size: 36px;
+        color: #007bff;
+    }
+
+    /* Style the visit count container */
+    .visit-count-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+    }
+</style>
 </head>
 <body>
    
@@ -473,5 +505,22 @@
    </main>
 
    <script type="text/javascript" src="script.js"></script>
+   <div class="visit-count-container">
+    <p>Number of visits: <span id="visitCount">0</span></p>
+</div>
+
+<script>
+    // JavaScript code to update the visit count
+    let visitCount = localStorage.getItem("visitCount");
+
+    if (visitCount === null) {
+        visitCount = 1;
+    } else {
+        visitCount = parseInt(visitCount) + 1;
+    }
+
+    localStorage.setItem("visitCount", visitCount);
+    document.getElementById("visitCount").textContent = visitCount;
+</script>
 </body>
 </html>
